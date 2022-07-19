@@ -13,4 +13,4 @@ with open('password.txt', "w") as newpassword:
 
 print("Your new username and password will be " + username + " and " + password)
 time.sleep(3)
-os.system("py login.py")
+os.system("python3 login.py")
