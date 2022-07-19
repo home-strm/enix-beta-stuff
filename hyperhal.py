@@ -1,25 +1,39 @@
-from ast import excepthandler
-from cgi import test
-from logging import exception
+from math import perm
 import time
 import random
 import os
-from turtle import color
+import turtle
 import click
 import re
+import sys
+import getpass
+
+with open('username.txt', 'r') as file:
+    username = file.read().replace('\n', '')
+
+with open('password.txt', 'r') as file:
+    password = file.read().replace('\n', '')
+
+permisions = '0'
 
 click.clear()
 
 def shellprompt():
     global prompt
-    prompt = input('user in ' + os.getcwd() + "> ")
+    prompt = input(username + ' in ~ ')
     commandcheck()
 
 def commandcheck():
     global cd
     global mkdir
+    global rm
+    global esu
+    global py
+    rm = 'rm '
     mkdir = 'mkdir '
     cd = 'cd '
+    esu = 'esu '
+    py = 'py '
     if prompt == 'ls':
         global lscmd
         lscmd = os.listdir(os.getcwd())
@@ -34,20 +48,73 @@ def commandcheck():
     elif prompt == 'time':
         print(time.asctime())
         shellprompt()
-    elif mkdir in prompt:
-        dirtomake = prompt.rsplit('mkdir ', 2)[2]
-        os.mkdir(dirtomake)
+    elif prompt == 'help':
+        print("ls - List all files and folders in active directory.")
+        print("cd - Change directorys. Usage - cd [Folder name]")
+        print("mkdir - Make a new folder. Usage -  mkdir [Folder name]")
+        print("clear - Clears screen.")
+        print("time - Displays time and date.")
+        print("rm - Removes a directory. Usage - rm [Folder name]")
+        print("py - Opens a Python program.")
+        print("esu - Runs a program with super user permisions.")
+        print("su - Enables super user permisions.")
+        print("sucheck - Checks permision level.")
+        print("logout - Returns to log in screen.")
         shellprompt()
-    for cd in prompt:
-        dirtocdto = prompt.partition('cd ')[2]
-        os.chdir(dirtocdto)
+    elif prompt == 'logout':
+        os.system('py login.py')
+    elif prompt == 'su':
+        suconfirm = getpass.getpass('Password: ')
+        if suconfirm == password:
+            global permisions
+            permisions = '1'
+            shellprompt()
+        else:
+            print('Incorrect password!')
+            permisions = '0'
+            shellprompt()
+    elif prompt == 'sucheck':
+        print(permisions)
+        shellprompt()
+    elif mkdir in prompt:
+        nfoldername = prompt.lstrip('mkdir ')
+        os.mkdir(nfoldername)
+        shellprompt()
+    elif cd in prompt:
+        try:
+            dirtocdto = prompt.lstrip('cd ')
+            os.chdir(dirtocdto)
+            shellprompt()
+        except:
+            print("CD : File or folder not found!")
+            shellprompt()
+    elif rm in prompt:
+        try:
+            dirtorm = prompt.lstrip('rm ')
+            os.rmdir(dirtorm)
+            shellprompt()
+        except:
+            print("DIR : File or folder not found!")
+            shellprompt()
+    elif esu in prompt:
+        esuconfirm = getpass.getpass('[ esu ] Password for ' + username + ': ')
+        if esuconfirm == password:
+            esudo = prompt.lstrip('esu ')
+            os.system('py ' + esudo)
+            shellprompt()
+        else:
+            print("Incorrect password!")
+            shellprompt()
+    elif py in prompt:
+        filetoopen = prompt.lstrip('py ')
+        os.system('py ' + filetoopen)
         shellprompt()
     else:
-        print("File or command not found!")
+        print("HyperHAL : File or command not found! Type help for a list of commands!")
         shellprompt()
 
 def shell():
-    print("eNix* [Version 0.1]")
+    print("eNix [Version 0.1 alpha]")
     print("HyperHAL INTERACTIVE SHELL.")
     print()
     shellprompt()
