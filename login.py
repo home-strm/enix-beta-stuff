@@ -27,7 +27,7 @@ def usernameCheck2():
 def usernameCheck3():    
     if usernameCheck1 == username:
         if passwordCheck1 == password:
-            os.system('py hyperhal.py')
+            os.system('python3 hyperhal.py')
         else:
             print("Incorrect password!")
             time.sleep(2)
@@ -42,5 +42,5 @@ def usernameCheck3():
 if usernameexists == True:
     usernameCheck2()
 else:
-    os.system('py register.py')
+    os.system('python3 register.py')
 

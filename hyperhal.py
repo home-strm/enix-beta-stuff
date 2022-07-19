@@ -62,7 +62,7 @@ def commandcheck():
         print("logout - Returns to log in screen.")
         shellprompt()
     elif prompt == 'logout':
-        os.system('py login.py')
+        os.system('python3 login.py')
     elif prompt == 'su':
         suconfirm = getpass.getpass('Password: ')
         if suconfirm == password:
