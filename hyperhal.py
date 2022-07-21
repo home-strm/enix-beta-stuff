@@ -59,6 +59,7 @@ def commandcheck():
         print("esu - Runs a program with super user permisions.")
         print("su - Enables super user permisions.")
         print("sucheck - Checks permision level.")
+        print("efetch -  Displays system information.")
         print("logout - Returns to log in screen.")
         shellprompt()
     elif prompt == 'logout':
@@ -73,9 +74,16 @@ def commandcheck():
             print('Incorrect password!')
             permisions = '0'
             shellprompt()
-    elif prompt == 'sucheck':
-        print(permisions)
+    elif prompt == 'efetch':
+        os.system('python3 efetch.py')
         shellprompt()
+    elif prompt == 'sucheck':
+        if permisions == '1':
+            print('Super user permisions enabled.')
+            shellprompt()
+        else:
+            print('Super user permisions disabled.')
+            shellprompt()
     elif mkdir in prompt:
         nfoldername = prompt.lstrip('mkdir ')
         os.mkdir(nfoldername)
@@ -100,7 +108,7 @@ def commandcheck():
         esuconfirm = getpass.getpass('[ esu ] Password for ' + username + ': ')
         if esuconfirm == password:
             esudo = prompt.lstrip('esu ')
-            os.system('py ' + esudo)
+            os.system('python3 ' + esudo)
             shellprompt()
         else:
             print("Incorrect password!")
