@@ -115,7 +115,7 @@ def commandcheck():
             shellprompt()
     elif py in prompt:
         filetoopen = prompt.lstrip('py ')
-        os.system('py ' + filetoopen)
+        os.system('python3 ' + filetoopen)
         shellprompt()
     else:
         print("HyperHAL : File or command not found! Type help for a list of commands!")
