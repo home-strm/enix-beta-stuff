@@ -73,9 +73,16 @@ def commandcheck():
             print('Incorrect password!')
             permisions = '0'
             shellprompt()
-    elif prompt == 'sucheck':
-        print(permisions)
+    elif prompt == 'efetch':
+        os.system('py efetch.py')
         shellprompt()
+    elif prompt == 'sucheck':
+        if permisions == '1':
+            print('Super user permisions enabled.')
+            shellprompt()
+        else:
+            print('Super user permisions disabled.')
+            shellprompt()
     elif mkdir in prompt:
         nfoldername = prompt.lstrip('mkdir ')
         os.mkdir(nfoldername)
